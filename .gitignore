@@ -4,17 +4,10 @@
 *.o
 *.obj
 
-# Precompiled Headers
-*.gch
-*.pch
-
 # Compiled Dynamic libraries
 *.so
 *.dylib
 *.dll
-
-# Fortran module files
-*.mod
 
 # Compiled Static libraries
 *.lai
@@ -26,3 +19,25 @@
 *.exe
 *.out
 *.app
+
+# MS Visual Studio 2012 solution and project files
+*.sdf
+*.sln
+*.suo
+*.vcxproj
+*.filters
+
+# MS Visual Studio 2012 debug files
+*.log
+*.tlog
+*.obj
+*.exe
+*.ilk
+*.lastbuildstate
+*.pdb
+*.idb
+*.ico
+*.rc
+*.filters
+*.ipch
+*.lo
