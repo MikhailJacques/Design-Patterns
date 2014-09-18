@@ -37,8 +37,8 @@ class Singleton
 		// Declare these three private. This ensures they are unaccessable 
 		// so that we do not accidently get copies of our singleton appearing
 		Singleton() { }
-        Singleton( Singleton const & ) { }	
-        Singleton & operator=( Singleton const & ) { }
+		Singleton( Singleton const & ) { }	
+		Singleton & operator=( Singleton const & ) { }
 };
 
 // Global static pointer used to ensure a single instance of the class.
@@ -48,7 +48,7 @@ Singleton* Singleton::single = NULL;
 // This function is called to create an instance of the class.
 Singleton* Singleton::getInstance()
 {
-    if ( !single )
+	if ( !single )
 		single = new Singleton();
 
 	return single;
@@ -62,7 +62,7 @@ Singleton::~Singleton()
 
 void Singleton::name()
 {
-    cout << "My name is Singleton" << endl;
+	cout << "My name is Singleton" << endl;
 	cout << "My address is: " << this << endl;
 }
 
@@ -73,17 +73,17 @@ void Singleton::printValue()
 
 int main()
 {
-    Singleton *sc1,*sc2;
+	Singleton *sc1, *sc2;
 
-    sc1 = Singleton::getInstance();
-    sc1->name();
+	sc1 = Singleton::getInstance();
+	sc1->name();
 	sc1->setValue(5);
 	sc1->printValue();
 
 	cout << endl;
 
-    sc2 = Singleton::getInstance();
-    sc2->name();
+	sc2 = Singleton::getInstance();
+	sc2->name();
 	sc1->setValue(7);
 	sc2->printValue();
 
@@ -91,5 +91,5 @@ int main()
 
 	system("pause");
 
-    return 0;
+	return 0;
 }
