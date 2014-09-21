@@ -13,131 +13,188 @@
 // Memento: It holds the internal state of an Originator.
 // Caretaker: It is responsible for keeping the memento.
 
+// Discussion of the code below. 
+// A memento is an object that stores a snapshot of the internal state of another object. 
+// It can be leveraged to support multi-level undo of the Command pattern. 
+// In this example, before a command is run against the Number object, 
+// Number's current state is saved in Command's static memento history list, 
+// and the command itself is saved in the static command history list. 
+// Undo() simply "pops" the memento history list and reinstates Number's state from the memento. 
+// Redo() "pops" the command history list. Note that Number's encapsulation is preserved, and Memento is wide open to Number.
+
+
+#include <string>
+#include <vector>
+#include <sstream>
 #include <iostream>
 
 using namespace std;
-
-class Number;
-
-class Memento
+ 
+const string NAME = "Number";
+ 
+template <typename T>
+string toString (const T& t) 
 {
+	stringstream ss;
+	ss << t;
+	return ss.str();
+}
+ 
+class Memento;
+ 
+class Number 
+{
+	private:
+
+		int value;
+		string name;
+		double decimal;  // and suppose there are loads of other data members
+
 	public:
-		
-		Memento(int val) { _state = val; }
+
+		Number (int newValue) : value (newValue), name (NAME + toString (value)), decimal ((float)value / 100) { }
+		void doubleValue() { value = value * 2; name = NAME + toString (value); decimal = (float)value / 100; }
+		void halfValue() { value = value / 2; name = NAME + toString (value); decimal = (float)value / 100; }
+		void increaseByOne() { value++; name = NAME + toString (value); decimal = (float)value / 100; }
+		int getValue() const { return value; }
+		string getName() const { return name; }
+		double getDecimal() const { return decimal; }
+		Memento* createMemento() const;
+		void reinstateMemento (Memento* mem);
+};
+
+ 
+class Memento {
 	
 	private:
-		
-		friend class Number;
-		int _state;
-};
 
-class Number
-{
+		Number number;
+
 	public:
 
-		Number(int value) { _value = value; }
-		void doubleValue() { _value = 2 * _value; }
-		void half() { _value = _value / 2; }
-		int getValue() { return _value; }
-		Memento *createMemento() { return new Memento(_value); }
-		void reinstateMemento(Memento *mem) { _value = mem->_state; }
+		Memento (const Number & num) : number (num) { }
 
+		// We want a snapshot of the entire Number because of its potentially numerous data members
+		Number snapshot() const { return number; }  
+};
+ 
+Memento* Number::createMemento() const 
+{
+	return new Memento (*this);
+}
+ 
+void Number::reinstateMemento(Memento* mem) 
+{
+	*this = mem->snapshot();
+}
+ 
+class Command 
+{
 	private:
 
-		int _value;
-};
-
-class Command
-{
+		typedef void (Number::*Action)();
+		Number* receiver;
+		Action action;
+		static unsigned int numCommands;
+		static unsigned int maxCommands;
+		static vector<Command*> commandList;
+		static vector<Memento*> mementoList;
+	
 	public:
 
-		typedef void(Number:: *Action)();
+		enum Operation {Exit, Double, Half, IncreasebyOne, Undo, Redo};
 
-		Command(Number *receiver, Action action)
+		Command (Number *newReceiver, Action newAction): receiver (newReceiver), action (newAction) { }
+		
+		virtual void execute() 
 		{
-			_receiver = receiver;
-			_action = action;
+			if (mementoList.size() < numCommands + 1)
+				mementoList.resize (numCommands + 1);
+			
+			// Save the last value
+			mementoList[numCommands] = receiver->createMemento();  
+			
+			if (commandList.size() < numCommands + 1)
+				commandList.resize(numCommands + 1);
+			
+			 // Save the last command
+			commandList[numCommands] = this; 
+			
+			if (numCommands > maxCommands)
+				maxCommands = numCommands;
+
+			numCommands++;
+
+			(receiver->*action)();
 		}
 
-		virtual void execute()
+		static void undo() 
 		{
-			_mementoList[_numCommands] = _receiver->createMemento();
-			_commandList[_numCommands] = this;
-
-			if (_numCommands > _highWater)
-				_highWater = _numCommands;
-
-			_numCommands++;
-			(_receiver->*_action)();
-		}
-
-		static void undo()
-		{
-			if (_numCommands == 0)
+			if (numCommands == 0)
 			{
-				cout << "*** Attempt to run off the end!! ***" << endl;
-				return ;
+				cout << "There is nothing to undo at this point." << endl;
+				return;
 			}
 
-			_commandList[_numCommands - 1]->_receiver->reinstateMemento(_mementoList[_numCommands - 1]);
+			commandList[numCommands - 1]->receiver->reinstateMemento(mementoList[numCommands - 1]);
 
-			_numCommands--;
+			numCommands--;
 		}
-
-		void static redo()
+		
+		void static redo() 
 		{
-			if (_numCommands > _highWater)
+			if (numCommands > maxCommands)
 			{
-				cout << "*** Attempt to run off the end!! ***" << endl;
-				return ;
+				cout << "There is nothing to redo at this point." << endl;
+				return;
 			}
-			(_commandList[_numCommands]->_receiver->*(_commandList[_numCommands]->_action))();
 
-			_numCommands++;
+			Command* commandRedo = commandList[numCommands];
+
+			(commandRedo->receiver->*(commandRedo->action))();
+
+			numCommands++;
 		}
-
-	protected:
-
-		Number *_receiver;
-		Action _action;
-		static Command *_commandList[20];
-		static Memento *_mementoList[20];
-		static int _numCommands;
-		static int _highWater;
 };
 
-Command *Command::_commandList[];
-Memento *Command::_mementoList[];
-int Command::_numCommands = 0;
-int Command::_highWater = 0;
+unsigned int Command::numCommands = 0;
+unsigned int Command::maxCommands = 0;
+vector<Command*> Command::commandList;
+vector<Memento*> Command::mementoList;
+
 
 int main()
 {
 	int i;
-
-	cout << "Integer: ";
+	cout << "Please enter an integer: ";
 	cin >> i;
 
 	Number *object = new Number(i);
-
-	Command *commands[3];
+ 
+	Command *commands[4];
 	commands[1] = new Command(object, &Number::doubleValue);
-	commands[2] = new Command(object, &Number::half);
-
-	cout << "Exit[0], Double[1], Half[2], Undo[3], Redo[4]: ";
+	commands[2] = new Command(object, &Number::halfValue);
+	commands[3] = new Command(object, &Number::increaseByOne);
+ 
+	cout << "[0]Exit, [1]Double, [2]Half, [3]Increase by One, [4]Undo, [5]Redo: ";
 	cin >> i;
-
-	while (i)
+ 
+	while (i != Command::Operation::Exit)
 	{
-		if (i == 3)
+		if (i == Command::Operation::Undo)
 			Command::undo();
-		else if (i == 4)
+		else if (i == Command::Operation::Redo)
 			Command::redo();
-		else
+		else if (i > Command::Operation::Exit && i <= Command::Operation::IncreasebyOne)
 			commands[i]->execute();
-
-		cout << "   " << object->getValue() << endl;
-		cout << "Exit[0], Double[1], Half[2], Undo[3], Redo[4]: ";
+		else
+		{
+			cout << "Enter a proper choice: ";
+			cin >> i;
+			continue;
+		}
+		cout << "   " << object->getValue() << "  " << object->getName() << "  " << object->getDecimal() << endl;
+		cout << "[0]Exit, [1]Double, [2]Half, [3]Increase by One, [4]Undo, [5]Redo: ";
 		cin >> i;
 	}
 }
