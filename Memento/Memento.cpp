@@ -93,7 +93,7 @@ class Command
 	private:
 
 		typedef void (Number::*Action)();
-		Number* receiver;
+		Number* number;
 		Action action;
 		static unsigned int numCommands;
 		static unsigned int maxCommands;
@@ -104,20 +104,20 @@ class Command
 
 		enum Operation {Exit, Double, Half, IncreasebyOne, Undo, Redo};
 
-		Command (Number *newReceiver, Action newAction): receiver (newReceiver), action (newAction) { }
+		Command (Number *newNumber, Action newAction): number (newNumber), action (newAction) { }
 		
 		virtual void execute() 
 		{
 			if (mementoList.size() < numCommands + 1)
-				mementoList.resize (numCommands + 1);
+				mementoList.resize(numCommands + 1);
 			
 			// Save the last value
-			mementoList[numCommands] = receiver->createMemento();  
+			mementoList[numCommands] = number->createMemento();  
 			
 			if (commandList.size() < numCommands + 1)
 				commandList.resize(numCommands + 1);
 			
-			 // Save the last command
+			// Save the last command
 			commandList[numCommands] = this; 
 			
 			if (numCommands > maxCommands)
@@ -125,7 +125,7 @@ class Command
 
 			numCommands++;
 
-			(receiver->*action)();
+			(number->*action)();
 		}
 
 		static void undo() 
@@ -136,7 +136,7 @@ class Command
 				return;
 			}
 
-			commandList[numCommands - 1]->receiver->reinstateMemento(mementoList[numCommands - 1]);
+			commandList[numCommands - 1]->number->reinstateMemento(mementoList[numCommands - 1]);
 
 			numCommands--;
 		}
@@ -151,7 +151,7 @@ class Command
 
 			Command* commandRedo = commandList[numCommands];
 
-			(commandRedo->receiver->*(commandRedo->action))();
+			(commandRedo->number->*(commandRedo->action))();
 
 			numCommands++;
 		}
