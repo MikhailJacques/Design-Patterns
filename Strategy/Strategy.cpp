@@ -12,9 +12,10 @@
 // Strategy lets the algorithm vary independently from the clients that use it.
 
 
-// The following application is used to simulate and study robots interaction. 
-// For the beginning a simple application is created to simulate an arena where robots are interacting. 
-// We have the following classes:
+// The following application simulates basic robots interaction. 
+// For the beginning a simple application is created to simulate an arena where robots are interacting.
+
+// It has the following classes:
 
 // IBehaviour (Strategy) - an interface that defines the behavior of a robot.
 
@@ -136,8 +137,9 @@ int main(int argc, char *argv[])
 	r2.move();
 	r3.move();
 
-	cout << "New behaviours: \n\nTom gets really scared.\nJerry becomes really violent because " 
-		<< "it is always attacked by other robots.\nBob keeps calm and does not give a shit this way or the other.\n" << endl;
+	cout << "New behaviours: \n\nTom gets really scared."
+		<< "\nJerry becomes really violent because it is always attacked by other robots." 
+		<< "\nBob keeps calm and does not give a shit this way or the other.\n" << endl;
 
 	r1.setBehaviour(new DefensiveBehaviour());
 	r2.setBehaviour(new AgressiveBehaviour());
