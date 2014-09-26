@@ -18,13 +18,6 @@
 // until all the options for creation have been specified.
 
 
-// http://www.oodesign.com/builder-pattern.html
-
-// http://www.codeproject.com/Articles/470476/Understanding-and-Implementing-Builder-Pattern-in
-
-// http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Prototype
-
-
 #include <string>
 #include <iostream>
  
