@@ -14,8 +14,10 @@
 
 // Solution
 // Define an intermediate object whose member functions define the desired object part by part before 
-// the object is available to the client. Builder Pattern lets us defer the construction of the object 
-// until all the options for creation have been specified.
+// the object is available to the client. Builder Pattern lets us defer the construction of the complex object
+// until all the options for creation have been specified and then creates the object in a step-by-step fashion.
+
+
 
 
 #include <string>
@@ -23,7 +25,10 @@
  
 using namespace std;
  
-// Define Product
+// Product
+// Represents the complex object under construction. 
+// Concrete Builders build the products' internal representation and define the process by which they are assembled.
+// Includes classes that define the constituent parts, including interfaces for assembling the parts into the final object.
 // This is the object that will be created by assembling many parts.
 class Pizza
 {
@@ -52,8 +57,8 @@ class Pizza
 };
 
 
-// Define Abstract Builder
-// This is the interface for creating the actual products
+// Abstract Builder
+// This is an abstract interface for creating parts of the actual products.
 class PizzaBuilder
 {
 	public:
@@ -75,7 +80,10 @@ class PizzaBuilder
 };
  
 
-// Define Concrete Builders that will create the complex Products.
+// Concrete Builders
+// Construct and assemble parts of the complex individual products by implementing the Builder interface.
+// Define and keep track of the representation they create.
+// Provide an interface for retrieving the products.
 // The this handle will keep track of what Product it has created, i.e. which pizza it backed, 
 // and the this reference will be used by the client to get the Product object.
 // The member functions of the Concrete Builders define the desired objects part by part 
@@ -127,7 +135,8 @@ class HawaiianPizzaBuilder : public PizzaBuilder
 		virtual void buildTopping() { m_pizza->setTopping("ham + pineapple"); }
 };
  
-
+// Director
+// Constructs an object using the Builder interface
 // This is the Client code that will specify the parts needed to be put tegether 
 // to create the actual concrete Product.
 class Cook
@@ -152,6 +161,7 @@ class Cook
 		PizzaBuilder* m_pizzaBuilder;
 };
  
+
 int main()
 {
 	Cook cook;
