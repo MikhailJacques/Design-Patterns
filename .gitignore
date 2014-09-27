@@ -27,7 +27,7 @@
 *.vcxproj
 *.filters
 
-# MS Visual Studio 2012 debug files
+# MS Visual Studio 2012 C++ debug files
 *.log
 *.tlog
 *.obj
@@ -42,3 +42,11 @@
 *.ipch
 *.lo
 *.cd
+
+# MS Visual Studio 2012 C# debug files
+*.config
+*.csproj
+*.txt
+*.cache
+*TemporaryGeneratedFile_*
+AssemblyInfo.cs
