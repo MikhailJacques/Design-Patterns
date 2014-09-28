@@ -1,3 +1,4 @@
+// Factory Design Pattern - Creational Category
 
 // The Factory Design Pattern is probably the most used design pattern in modern programming languages.
 // The intent is to create objects without exposing the instantiation logic to the client and 

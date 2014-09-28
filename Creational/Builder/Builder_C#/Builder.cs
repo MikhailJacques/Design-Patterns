@@ -1,4 +1,5 @@
-﻿// Builder Design Pattern - Creational Patterns category
+﻿// Builder Design Pattern - Creational category
+
 // http://www.dofactory.com/net/builder-design-pattern
 
 using System;

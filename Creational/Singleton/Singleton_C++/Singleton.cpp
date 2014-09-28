@@ -1,4 +1,4 @@
-// Creational Pattern: Singleton
+// Singleton Design Pattern - Creational Category
 
 // We use the Singleton pattern when we want to create only one instance of a class in a truly object oriented fashion 
 // by adhering to the basic principles of object oriented programming. The Singleton design pattern comes under the 

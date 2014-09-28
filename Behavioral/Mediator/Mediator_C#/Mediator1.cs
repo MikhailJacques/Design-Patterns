@@ -4,20 +4,6 @@
 // Mediator promotes loose coupling by keeping objects from referring to each other explicitly, 
 // and lets you vary their interaction independently.
 
-
-// The classes and objects participating in this pattern are:
-
-// Mediator (IChatroom)
-// Defines an interface for communicating with Colleague objects
-
-// ConcreteMediator (Chatroom)
-// Implements cooperative behavior by coordinating Colleague objects
-// Knows and maintains its colleagues
-
-// Colleague classes (Participant)
-// Each Colleague class knows its Mediator object
-// Each colleague communicates with its mediator whenever it would have otherwise communicated with another colleague
-
 // http://www.dofactory.com/net/mediator-design-pattern
 
 using System;
@@ -61,8 +47,8 @@ namespace Mediator
 
     /// <summary>
     /// The 'ConcreteMediator' class
-    /// Implements cooperative behavior by coordinating Colleague objects
-    /// Knows and maintains its colleagues
+    /// Knows the Colleague class and keeps a reference to the Colleague objects
+    /// Implements cooperative behavior by coordinating communication between the Colleague objects
     /// </summary>
     class ConcreteMediator : Mediator
     {

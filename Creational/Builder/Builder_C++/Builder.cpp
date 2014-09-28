@@ -1,4 +1,4 @@
-// Builder Design Pattern - Creational Patterns category
+// Builder Design Pattern - Creational Category
 
 // GoF defines Builder Design Pattern as follows:
 // The Builder Design Pattern is used to separate the construction of a complex object from its representation 

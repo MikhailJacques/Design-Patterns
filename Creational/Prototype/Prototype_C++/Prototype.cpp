@@ -1,4 +1,4 @@
-// Prototype Design Pattern - Creational Patterns category
+// Prototype Design Pattern - Creational Category
 
 // A prototype pattern is used in software development when the type of objects to create 
 // is determined by a prototypical instance, which is cloned to produce new objects.

@@ -42,6 +42,7 @@
 *.ipch
 *.lo
 *.cd
+*.opensdf
 
 # MS Visual Studio 2012 C# debug files
 *.config

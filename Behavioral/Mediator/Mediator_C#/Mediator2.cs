@@ -2,9 +2,32 @@
 
 // This real-world code demonstrates the Mediator pattern facilitating loosely coupled 
 // communication between different Participants registering with a Chatroom. 
-// The Chatroom is the central hub through which all communication takes place. 
+
+// In a chat application we can have several participants. It's not a good idea to connect 
+// each participant to all the others because the number of connections would be really high, 
+// there would be technical problems due to proxies and firewalls, etc.
+// The most appropriate solution is to have a hub where all participants will connect.
+// The Chatroom is the central hub through which all communication takes place.
+// This central hub is just the Mediator class.
 // At this point only one-to-one communication is implemented in the Chatroom, 
-// but would be trivial to change to one-to-many.
+// but it is trivial to change it to one-to-many.
+
+// Participants
+// The classes and objects participating in this pattern are:
+
+// Mediator (IChatroom)
+// Defines an interface for communicating with Colleague objects
+
+// ConcreteMediator (Chatroom)
+// Knows the Colleague class and keeps a reference to the Colleague objects
+// Implements cooperative behavior by coordinating communication between the Colleague objects
+
+// Colleague classes (Participant)
+// Each Colleague object keeps a reference to (knows about) its Mediator object
+// Each Colleague object communicates with its Mediator object whenever it would have otherwise 
+// communicated with another Colleague object
+
+// http://www.dofactory.com/net/mediator-design-pattern
 
 using System;
 using System.Collections.Generic;
