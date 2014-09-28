@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Mediator Design Pattern - Behavioral Category
 
 // This real-world code demonstrates the Mediator pattern facilitating loosely coupled 
 // communication between different Participants registering with a Chatroom. 
 // The Chatroom is the central hub through which all communication takes place. 
 // At this point only one-to-one communication is implemented in the Chatroom, 
 // but would be trivial to change to one-to-many.
+
+using System;
+using System.Collections.Generic;
 
 namespace Mediator2
 {
