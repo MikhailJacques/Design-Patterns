@@ -50,5 +50,11 @@
 *.cache
 *..manifest
 *.vshost.exe.manifest
-*TemporaryGeneratedFile_*
+# *TemporaryGeneratedFile_*
 AssemblyInfo.cs
+
+# MS Visual Studio 2012 UML files
+*.modelproj
+*.xml
+*.classdiagram
+*.classdiagram.*

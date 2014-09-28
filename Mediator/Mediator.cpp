@@ -1,1 +1,0 @@
-// Nediator Design Pattern - Behavioral Patterns Category
