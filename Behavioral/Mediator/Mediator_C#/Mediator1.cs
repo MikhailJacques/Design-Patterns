@@ -115,7 +115,7 @@ namespace Mediator
     class ConcreteColleague1 : Colleague
     {
         // Constructor
-        public ConcreteColleague1(Mediator mediator) : base(mediator) {}
+        public ConcreteColleague1(Mediator mediator) : base(mediator) { }
 
         public void Send(string message)
         {
@@ -134,7 +134,7 @@ namespace Mediator
     class ConcreteColleague2 : Colleague
     {
         // Constructor
-        public ConcreteColleague2(Mediator mediator) : base(mediator) {}
+        public ConcreteColleague2(Mediator mediator) : base(mediator) { }
 
         public void Send(string message)
         {
