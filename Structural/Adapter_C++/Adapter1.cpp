@@ -14,7 +14,7 @@
 
 using namespace std;
 
-// Abstract Target
+// Abstract Target: This is the interface the client interacts with.
 class AbstractPlug 
 {
 	public:
@@ -28,11 +28,13 @@ class Plug : public AbstractPlug
 {
 	public:
 
-		void RoundPin() { cout << " I am Round Pin" << endl; }
-		void PinCount() { cout << " I have two pins" << endl; }
+		void RoundPin() { cout << "I am Round Pin" << endl; }
+		void PinCount() { cout << "I have two pins" << endl; }
 };
 
-// Abstract Adaptee
+
+// Abstract Adaptee: This is the interface the client wants to interact with, 
+// but cannot interact without the help of the Adapter.
 class AbstractSwitchBoard 
 {
 	public:
@@ -46,22 +48,23 @@ class SwitchBoard : public AbstractSwitchBoard
 {
 	public:
 
-		void FlatPin() { cout << " Flat Pin" << endl; }
-		void PinCount() { cout << " I have three pins" << endl; }
+		void FlatPin() { cout << "I am Flat Pin" << endl; }
+		void PinCount() { cout << "I have three pins" << endl; }
 };
 
-// Adapter
+// Adapter: This is derived from Target and contains the object of Adaptee.
 class Adapter : public AbstractPlug 
 {
 	private:
 
-		AbstractSwitchBoard * T;
+		AbstractSwitchBoard * _asb;
 
 	public:
 
-		Adapter(AbstractSwitchBoard * TT) { T = TT; }
-		void RoundPin() { T->FlatPin(); }
-		void PinCount() { T->PinCount(); }
+		Adapter(AbstractSwitchBoard * asb) { _asb = asb; }
+
+		void RoundPin() { _asb->FlatPin(); }
+		void PinCount() { _asb->PinCount(); }
 };
 
 // Client code
@@ -71,7 +74,7 @@ int main()
 	SwitchBoard *mySwitchBoard = new SwitchBoard; 
 	
 	// Target = Adapter(Adaptee)
-	AbstractPlug *adapter = new Adapter(mySwitchBoard);
+	AbstractPlug * adapter = new Adapter(mySwitchBoard);
 
 	adapter->RoundPin();
 	adapter->PinCount();
