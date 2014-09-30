@@ -4,7 +4,7 @@
 // Adapter lets classes work together that could not otherwise because of incompatible interfaces.
 
 // An Adapter pattern comprises three components:
-// Target: This is the interface with which the clients interact.
+// Target: This is the interface with which the client interacts.
 // Adaptee: This is the interface the client wants to interact with, but cannot without the help of the Adapter.
 // Adapter: This is derived from Target and contains the object of Adaptee.
 

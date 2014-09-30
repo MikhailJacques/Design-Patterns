@@ -5,6 +5,10 @@
 // The client uses (is coupled to) the new interface
 // The adapter/wrapper "maps" to the legacy implementation
 
+// An Adapter pattern comprises three components:
+// Target: This is the interface with which the client interacts.
+// Adaptee: This is the interface the client wants to interact with, but cannot without the help of the Adapter.
+// Adapter: This is derived from Target and contains the object of Adaptee.
 
 // https://gist.github.com/pazdera/1145857
 
@@ -14,55 +18,58 @@
 using namespace std;
 
 // Define new type - wire with electrons
-typedef int Cable; 
+typedef int wire; 
+
+enum wire_type { EARTH = 0, LIVE, NEUTRAL };
  
-// Adaptee (source) interface
+// Adaptee: This is the interface the client wants to interact with, but cannot without the help of the Adapter.
 class EuropeanSocketInterface
 {
 	public:
 
 		virtual int voltage() = 0;
-		virtual Cable live() = 0;
-		virtual Cable neutral() = 0; 
-		virtual Cable earth() = 0;
+		virtual wire live() = 0;
+		virtual wire neutral() = 0; 
+		virtual wire earth() = 0;
 };
  
 // Concrete Adaptee
-class Socket : public EuropeanSocketInterface
+class EuropeanSocket : public EuropeanSocketInterface
 {
 	public:
 
 		int voltage() { return 230; }
-		Cable live() { return 1; }
-		Cable neutral() { return -1; }
-		Cable earth() { return 0; }
+		wire live() { return LIVE; }
+		wire neutral() { return NEUTRAL; }
+		wire earth() { return EARTH; }
 };
  
-// Target interface
+// Target: This is the interface with which the client interacts.
 class USASocketInterface
 {
 	public:
 
 		virtual int voltage() = 0;
-		virtual Cable live() = 0;
-		virtual Cable neutral() = 0;
+		virtual wire live() = 0;
+		virtual wire neutral() = 0;
 };
  
-// Adapter
-class Adapter : public USASocketInterface
+// Adapter: This is derived from Target and contains the object of Adaptee.
+class USAToEuropeanSocketAdapter : public USASocketInterface
 {
+	// Adaptee: This is the interface the client wants to interact with, but cannot without the help of the Adapter.
 	EuropeanSocketInterface * socket;
  
 	public:
 
-		void plugIn(EuropeanSocketInterface* outlet)
+		void plugIn(EuropeanSocketInterface * outlet)
 		{
 			socket = outlet;
 		}
  
 		int voltage() { return 110; }
-		Cable live() { return socket->live(); }
-		Cable neutral() { return socket->neutral(); }
+		wire live() { return socket->live(); }
+		wire neutral() { return socket->neutral(); }
 };
  
 // Client
@@ -81,13 +88,13 @@ class ElectricKettle
 		{
 			if (power->voltage() > 110)
 			{
-				cout << "Kettle is on fire!" << std::endl;
+				cout << "Kettle is on fire!" << endl;
 				return;
 			}
  
-			if (power->live() == 1 && power->neutral() == -1)
+			if (power->live() == LIVE && power->neutral() == NEUTRAL)
 			{
-				cout << "Coffee time!" << std::endl;
+				cout << "Coffee time!" << endl;
 			}
 		}
 };
@@ -95,9 +102,9 @@ class ElectricKettle
  
 int main()
 {
-	Socket * socket = new Socket;
-	Adapter * adapter = new Adapter;
-	ElectricKettle* kettle = new ElectricKettle;
+	EuropeanSocket * socket = new EuropeanSocket;								// Adaptee
+	USAToEuropeanSocketAdapter * adapter = new USAToEuropeanSocketAdapter;		// Adapter
+	ElectricKettle * kettle = new ElectricKettle;								// Client
  
 	// Pluging in
 	adapter->plugIn(socket);
