@@ -29,7 +29,7 @@ class TimeImp
 		}
 		
 		virtual void tell() 
-		{					   // setfill(48)
+		{					  
 			cout << "Time is " << setfill('0') << setw(2) << _hr << _min << endl;
 		}
 
