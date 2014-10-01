@@ -11,7 +11,7 @@
 
 using System;
 
-namespace DoFactory.GangOfFour.Adapter.Structural
+namespace Adapter
 {
     /// <summary>
     /// MainApp startup class for Structural

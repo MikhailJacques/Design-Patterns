@@ -25,65 +25,67 @@
 using System;
 using System.Collections.Generic;
 
-namespace Adapter_CS
+namespace Adapter
 {
-    class Adapter3
+    // ITarget: Method which the online shopping portal calls to get the list of products. 
+    // Here getting the list of products is the functionality which this portal wants to achieve 
+    // and this request has been encapsulated in this interface. 
+    // In short - functionality to achieve is exposed through this interface.
+    interface ITarget
     {
-        // ITarget: Method which the online shopping portal calls to get the list of products. 
-        // Here getting the list of products is the functionality which this portal wants to achieve 
-        // and this request has been encapsulated in this interface. 
-        // In short - functionality to achieve is exposed through this interface.
-        interface ITarget
+        List<string> GetProducts();
+    }
+
+    // Adapter: The wrapper which implements ITarget and calls third party vendor’s code.
+    // This VendorAdapter is called Object Adapter because it uses the object composition 
+    // (creates an instance of VendorAdaptee) to call the adaptee code. 
+    class VendorAdapter : ITarget
+    {
+        VendorAdaptee adaptee;
+
+        public List<string> GetProducts()
         {
-            List<string> GetProducts();
+            // Use lazy instantiation
+            // VendorAdaptee adaptee = new VendorAdaptee();
+            adaptee = new VendorAdaptee();
+            return adaptee.GetListOfProducts();
         }
+    }
 
-        // Adapter: The wrapper which implements ITarget and calls third party vendor’s code.
-        // This VendorAdapter is called Object Adapter because it uses the object composition 
-        // (creates an instance of VendorAdaptee) to call the adaptee code. 
-        class VendorAdapter : ITarget
+    // Adaptee: The third party vendor’s code which gives us the list of products.
+    // For the sake of the example a List is also used to store the products, 
+    // but any other storage structure could have been used instead.
+    public class VendorAdaptee
+    {
+        public List<string> GetListOfProducts()
         {
-            public List<string> GetProducts()
-            {
-                VendorAdaptee adaptee = new VendorAdaptee();
-                return adaptee.GetListOfProducts();
-            }
+            List<string> products = new List<string>();
+            products.Add("Books");
+            products.Add("Gadgets");
+            products.Add("Widgets");
+            products.Add("Television");
+            products.Add("Gaming Consoles");
+            products.Add("Musical Instruments");
+            products.Add("Tools");
+
+            return products;
         }
+    }
 
-        // Adaptee: The third party vendor’s code which gives us the list of products.
-        // For the sake of the example a List is also used to store the products, 
-        // but any other storage structure could have been used instead.
-        public class VendorAdaptee
+    // Client: The online shopping portal code which gets the list of products and then displays them.
+    class ShoppingPortalClient
+    {
+        static void Main(string[] args)
         {
-            public List<string> GetListOfProducts()
+            ITarget adapter = new VendorAdapter();
+
+            foreach (string product in adapter.GetProducts())
             {
-                List<string> products = new List<string>();
-                products.Add("Books");
-                products.Add("Gadgets");
-                products.Add("Widgets");
-                products.Add("Television");
-                products.Add("Gaming Consoles");
-                products.Add("Musical Instruments");
-                products.Add("Tools");
-
-                return products;
+                Console.WriteLine(product);
             }
-        }
 
-        // Client: The online shopping portal code which gets the list of products and then displays them.
-        class ShoppingPortalClient
-        {
-            static void Main(string[] args)
-            {
-                ITarget adapter = new VendorAdapter();
-
-                foreach (string product in adapter.GetProducts())
-                {
-                    Console.WriteLine(product);
-                }
-
-                Console.ReadLine();
-            }
+            // Wait for user
+            Console.ReadKey();
         }
     }
 }

@@ -26,7 +26,7 @@
 
 using System;
 
-namespace DoFactory.GangOfFour.Adapter.RealWorld
+namespace Adapter
 {
     /// <summary>
     /// MainApp startup class for Real-World 
