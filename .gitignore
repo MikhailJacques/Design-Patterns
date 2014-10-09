@@ -60,3 +60,6 @@ AssemblyInfo.cs
 *.classdiagram
 *.classdiagram.*
 *.uml
+
+# Compressed files
+*.zip
