@@ -20,7 +20,6 @@
 // http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns/Behavioral_Patterns#Observer
 // http://sourcemaking.com/design_patterns/observer
 // http://www.oodesign.com/observer-pattern.html
-// http://www.codeproject.com/Articles/769084/Observer-Pattern-Csharp
 
 #include <list>
 #include <iostream>
