@@ -11,15 +11,16 @@
 // event or application state change. There also should be a way to unsubscribe.
 
 // Forces 
-// Observables (subjects) and observers (dependents) should be represented by objects. 
-// The observable objects (subjects) notify the observer objects (dependents).
+// Observables (Subjects) and Observers (Dependents) should be represented by objects. 
+// The Observable objects (Subjects) notify the Observer objects (Dependents).
 
 // Solution 
-// After subscribing the listening objects are notified by a way of method call.
+// After subscribing the listening objects are notified by way of a method call.
+
+// Overview
+// http://www.oodesign.com/observer-pattern.html
 
 // http://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns/Behavioral_Patterns#Observer
-// http://sourcemaking.com/design_patterns/observer
-// http://www.oodesign.com/observer-pattern.html
 
 #include <list>
 #include <iostream>
@@ -54,7 +55,7 @@ class WeatherDataInterface
 };
  
 // The Concrete Subject
-class WeatherData: public WeatherDataInterface
+class WeatherData : public WeatherDataInterface
 {
 	public:
 
@@ -67,14 +68,14 @@ class WeatherData: public WeatherDataInterface
 			notifyObserver();
 		}
  
-		void registerObserver(ObserverBoardInterface * ob)
+		void registerObserver(ObserverBoardInterface * observer)
 		{
-			_observers.push_back(ob);
+			_observers.push_back(observer);
 		}
  
-		void removeObserver(ObserverBoardInterface * ob)
+		void removeObserver(ObserverBoardInterface * observer)
 		{
-			_observers.remove(ob);
+			_observers.remove(observer);
 		}
 
 	protected:

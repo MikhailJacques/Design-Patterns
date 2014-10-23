@@ -1,148 +1,100 @@
 // Observer Design Pattern - Behavioral Category
 
+// SensorSystem is the "Subject". 
+// Lighting, Gates and Surveillance are the "Views". 
+// The Subject is only coupled to the "abstraction" of AlarmListener.
+
+// An object's class defines how the object is implemented. 
+// In contrast, an object's type only refers to its interface. 
+// Class inheritance defines an object's implementation in terms of another object's implementation. 
+// Type inheritance describes when an object can be used in place of another.
+
+// http://sourcemaking.com/design_patterns/observer/cpp/2
+
 #include <vector>
 #include <iostream>
 
 using namespace std;
 
-// http://sourcemaking.com/design_patterns/observer/cpp/3
-
-// 1. Model the "independent" functionality with a "subject" abstraction
-// 2. Model the "dependent" functionality with "observer" hierarchy
-// 3. The Subject is coupled only to the Observer base class
-// 4. Observers register themselves with the Subject
-// 5. The Subject broadcasts events to all registered Observers
-// 6. Observers "pull" the information they need from the Subject
-// 7. Client configures the number and type of Observers
-
-// Forward declaration
-class Observer;
-
-// 1. Model the "independent" functionality with a "subject" abstraction
-class Subject 
+class AlarmListener
 {
 	public:
 
-		void attach(Observer * observer) 
-		{
-			views.push_back(observer);
-		}
-
-		void setVal(int val) 
-		{
-			_value = val;
-
-			notify();
-		}
-
-		int getVal() 
-		{
-			return _value;
-		}
-
-		void notify();
-
-	private:
-
-		int _value;
-
-		// 3. The Subject is coupled only to the Observer base class (interface)
-		vector <class Observer *> views; 
+		virtual void alarm() = 0;
 };
 
-
-class Observer 
-{	
+class SensorSystem
+{
+	vector <AlarmListener *> listeners;
+	
 	public:
 
-		Observer(Subject * subject, int divisor) 
+		void attach(AlarmListener * alarm)
 		{
-			_subject = subject;
-			_divisor = divisor;
-
-			// 4. Observers register themselves with the Subject
-			_subject->attach(this);
+			listeners.push_back(alarm);
 		}
 
-		virtual void update() = 0;
-
-	protected:
-
-			Subject * getSubject() 
-			{
-				return _subject;
-			}
-
-			int getDivisor() 
-			{
-				return _divisor;
-			}
-
-	private:
-
-		int _divisor;
-
-		// 2. Model the "dependent" functionality with "observer" hierarchy
-		// It is necessary for the Observer to have a handle to the Subject so
-		// that the Observer can pull the information it needs from the Subject
-		Subject * _subject;
+		void soundTheAlarm()
+		{
+			for (unsigned int i = 0; i < listeners.size(); i++)
+				listeners[i]->alarm();
+		}
 };
 
-
-class DivisionObserver : public Observer 
+class Lighting : public AlarmListener
 {
 	public:
 
-		DivisionObserver(Subject * subject, int divisor) : Observer(subject, divisor) { }
-		
-		// 6. Observers "pull" the information they need from the Subject
-		// (in response to broadcasted notification by the Subject)
-		void update() 
-		{
-			int v = getSubject()->getVal(), d = getDivisor();
-			
-			cout << v << " divided by " << d << " is " << v / d << endl;
-		}
+		void alarm() { cout << "Turn the lights on" << '\n'; }	// virtual
 };
 
-
-class ModulusObserver : public Observer 
+class Gates : public AlarmListener
 {
 	public:
 
-		ModulusObserver(Subject * subject, int subjectulus) : Observer(subject, subjectulus) { }
-		
-		// 6. Observers "pull" the information they need from the Subject
-		// (in response to broadcasted notification by the Subject)
-		void update() 
-		{
-			int v = getSubject()->getVal(), d = getDivisor();
+		void alarm() { cout << "Close the gates" << '\n'; } // virtual
+};
 
-			cout << v << " modulus " << d << " is " << v % d << endl;
+class CheckList
+{
+	virtual void localize() { cout << "  - Establish a perimeter" << '\n'; }
+	virtual void isolate()  { cout << "  - Isolate the grid" << '\n'; }
+	virtual void identify() { cout << "  - Identify the source" << '\n'; }
+
+	public:
+
+		void byTheNumbers()
+		{
+			// Template Method design pattern
+			localize();
+			isolate();
+			identify();
 		}
 };
 
-
-void Subject::notify() 
+// class inheritance and type inheritance
+class Surveillance : public CheckList, public AlarmListener
 {
-	// 5. The Subject broadcasts events to all registered Observers
-	for (unsigned int i = 0; i < views.size(); i++)
-		views[i]->update();
-}
+	void isolate() { cout << "  - Train the cameras" << '\n'; } // virtual
+	
+	public:
 
+		void alarm() // virtual
+		{
+			cout << "Surveillance - by the numbers:" << '\n';
+			byTheNumbers();
+		}
+};
 
-int main() 
+int main()
 {
-	Subject subj;
+	SensorSystem ss;
 
-	// 7. Client configures the number and type of Observers
-	ModulusObserver modObs1(&subj, 3);
-	DivisionObserver divObs1(&subj, 4), divObs2(&subj, 3);
+	ss.attach(&Gates());
+	ss.attach(&Lighting());
+	ss.attach(&Surveillance());
 
-	// Once the value is set, the subject notifies all registered observers
-	subj.setVal(14);
+	ss.soundTheAlarm();
 
 	cin.get();
-
-	return 0;
 }
