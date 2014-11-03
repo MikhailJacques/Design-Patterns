@@ -121,7 +121,7 @@ class RightJustify : public Justify
 
 			int offset = _width - strlen(line);
 
-			if ( offset < 0 || offset > BUF_SIZE )
+			if ( offset < 0 || offset > _width )
 				offset = 0;
 
 			// Fill in block of memory with whitespace characters
@@ -153,7 +153,7 @@ class CenterJustify : public Justify
 			char buf[BUF_SIZE];
 			int offset = (_width - strlen(line)) / 2;
 
-			if ( offset < 0 || offset > BUF_SIZE )
+			if ( offset < 0 || offset > _width )
 				offset = 0;
 
 			// Fill in block of memory with whitespace characters
