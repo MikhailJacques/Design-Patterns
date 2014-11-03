@@ -36,15 +36,17 @@
 
 #include <string>
 #include <iostream>
+
 using namespace std;
 
 class IBehaviour
 {
     public:
+
         virtual int moveCommand() const = 0;
 };
 
-class AgressiveBehaviour: public IBehaviour
+class AgressiveBehaviour : public IBehaviour
 {
     public:
 
@@ -55,7 +57,7 @@ class AgressiveBehaviour: public IBehaviour
         }
 };
 
-class DefensiveBehaviour: public IBehaviour
+class DefensiveBehaviour : public IBehaviour
 {
     public:
 
@@ -66,7 +68,7 @@ class DefensiveBehaviour: public IBehaviour
         }
 };
  
-class NormalBehaviour: public IBehaviour
+class NormalBehaviour : public IBehaviour
 {
     public:
 
@@ -108,7 +110,7 @@ class Robot
 			int command = behaviour->moveCommand();
 			
 			// ... send the command to mechanisms
-			cout << "The returned behaviour id is sent to the movement mechanisms for robot " 
+			cout << "The returned behaviour id is sent to the movement mechanism for robot " 
 				<< this->name << ".\n" << endl;
 		}
 
@@ -138,16 +140,21 @@ int main(int argc, char *argv[])
 	r2.move();
 	r3.move();
 
-	cout << "New behaviours: \n\nTom gets really scared."
+	cout << "Original behaviours: \n\nTom gets really scared."
 		<< "\nJerry becomes really violent because it is always attacked by other robots." 
-		<< "\nBob keeps calm and does not give a shit this way or the other.\n" << endl;
+		<< "\nBob keeps calm and does care about his surroundings.\n" << endl;
 
 	r1.setBehaviour(new DefensiveBehaviour());
 	r2.setBehaviour(new AgressiveBehaviour());
+
+	cout << "New behaviours: \n\nTom is sick of getting scared and becomes really violent now."
+		<< "\nJerry on the other hand starts being a pussy and runs away from others." 
+		<< "\nBob acts as usuall and does not give a shit this way or the other.\n" << endl;
 
 	r1.move();
 	r2.move();
 	r3.move();
 
-	system("pause");
+	cin.get();
+	// system("pause");
 }
