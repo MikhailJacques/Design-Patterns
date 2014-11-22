@@ -1,4 +1,4 @@
-// Composite design pattern - Structural Category
+// Composite Design Pattern - Structural Category
 
 // Composite pattern lets clients treat individual objects and compositions of objects uniformly. 
 // The Composite pattern can represent both conditions. 

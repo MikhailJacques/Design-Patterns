@@ -1,4 +1,4 @@
-// Composite design pattern - Structural Category
+// Composite Design Pattern - Structural Category
 
 // Structural patterns deal with decoupling the interface and implementation of classes and objects
 // Composite pattern forms a tree structure of simple and composite objects 

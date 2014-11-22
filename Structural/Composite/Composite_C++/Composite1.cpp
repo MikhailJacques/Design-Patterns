@@ -1,4 +1,4 @@
-// Composite design pattern - Structural Category
+// Composite Design Pattern - Structural Category
 
 // Motivation
 // There are times when a program needs to manipulate a tree data structure and it is necessary to treat both 
