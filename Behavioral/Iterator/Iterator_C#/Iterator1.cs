@@ -1,34 +1,60 @@
 ﻿// Iterator Design Pattern - Behavioral Category
 
+// Iterator pattern provides a way to traverse (iterate) sequentially over a collection of items 
+// without detailing (exposing) the underlying structure of the collection.
+
 // http://sourcemaking.com/design_patterns/iterator/c-sharp-dot-net
 
 using System;
 using System.Collections;
 
-class MainApp
+
+// "Iterator" 
+abstract class Iterator
 {
-    static void Main()
+    public abstract object First();
+    public abstract object Next();
+    public abstract bool IsDone();
+    public abstract object CurrentItem();
+}
+
+
+// "ConcreteIterator" 
+class ConcreteIterator : Iterator
+{
+    private int current = 0;
+    private ConcreteAggregate aggregate;
+
+    // Constructor 
+    public ConcreteIterator(ConcreteAggregate aggregate)
     {
-        ConcreteAggregate a = new ConcreteAggregate();
-        a[0] = "Item A";
-        a[1] = "Item B";
-        a[2] = "Item C";
-        a[3] = "Item D";
+        this.aggregate = aggregate;
+    }
 
-        // Create Iterator and provide aggregate 
-        ConcreteIterator i = new ConcreteIterator(a);
+    public override object First()
+    {
+        return aggregate[0];
+    }
 
-        Console.WriteLine("Iterating over collection:");
-
-        object item = i.First();
-        while (item != null)
+    public override object Next()
+    {
+        object ret = null;
+        if (current < aggregate.Count - 1)
         {
-            Console.WriteLine(item);
-            item = i.Next();
+            ret = aggregate[++current];
         }
 
-        // Wait for user 
-        Console.Read();
+        return ret;
+    }
+
+    public override object CurrentItem()
+    {
+        return aggregate[current];
+    }
+
+    public override bool IsDone()
+    {
+        return current >= aggregate.Count ? true : false;
     }
 }
 
@@ -65,51 +91,31 @@ class ConcreteAggregate : Aggregate
 }
 
 
-// "Iterator" 
-abstract class Iterator
+class MainApp
 {
-    public abstract object First();
-    public abstract object Next();
-    public abstract bool IsDone();
-    public abstract object CurrentItem();
-}
-
-
-// "ConcreteIterator" 
-class ConcreteIterator : Iterator
-{
-    private ConcreteAggregate aggregate;
-    private int current = 0;
-
-    // Constructor 
-    public ConcreteIterator(ConcreteAggregate aggregate)
+    static void Main()
     {
-        this.aggregate = aggregate;
-    }
+        ConcreteAggregate aggr = new ConcreteAggregate();
 
-    public override object First()
-    {
-        return aggregate[0];
-    }
+        aggr[0] = "Item A";
+        aggr[1] = "Item B";
+        aggr[2] = "Item C";
+        aggr[3] = "Item D";
+        aggr[4] = "Bob";
 
-    public override object Next()
-    {
-        object ret = null;
-        if (current < aggregate.Count - 1)
+        // Create Iterator and provide aggregate 
+        ConcreteIterator it = new ConcreteIterator(aggr);
+
+        Console.WriteLine("Iterating over collection:");
+
+        object item = it.First();
+        while (item != null)
         {
-            ret = aggregate[++current];
+            Console.WriteLine(item);
+            item = it.Next();
         }
 
-        return ret;
-    }
-
-    public override object CurrentItem()
-    {
-        return aggregate[current];
-    }
-
-    public override bool IsDone()
-    {
-        return current >= aggregate.Count ? true : false;
+        // Wait for user 
+        Console.Read();
     }
 }
