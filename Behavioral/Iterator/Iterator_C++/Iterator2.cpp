@@ -22,7 +22,7 @@ class Stack
 
 		Stack()
 		{
-			sp =  - 1;
+			sp = - 1;
 		}
 
 		void push(int in)
