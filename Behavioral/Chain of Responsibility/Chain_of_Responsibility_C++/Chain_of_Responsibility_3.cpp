@@ -87,7 +87,6 @@ class AskBob : public GimmeStrategy
 };
 
 
-
 class Gimme : public GimmeStrategy 
 {
 		vector<GimmeStrategy *> chain;

@@ -140,7 +140,7 @@ namespace Client
             firstRequest.Description = "The parent requests to have a copy of their kid's daily status.\n";
             firstRequest.Level = ResponsibilityLevel.Low;
             Console.WriteLine("Request Info: " + firstRequest.Description);
-            
+
             // Send the request
             teacher.ProcessRequest(firstRequest);
             Console.WriteLine();
@@ -151,7 +151,7 @@ namespace Client
             secondRequest.Description = "The parent requests to pay the tuition fees.\n";
             secondRequest.Level = ResponsibilityLevel.Medium;
             Console.WriteLine("Request Info: " + secondRequest.Description);
-            
+
             // Send the request
             teacher.ProcessRequest(secondRequest);
             Console.WriteLine();
@@ -162,10 +162,10 @@ namespace Client
             thirdRequest.Description = "Mr. Jacques requests to schedule a visit for all his kids.\n";
             thirdRequest.Level = ResponsibilityLevel.High;
             Console.WriteLine("Request Info: " + thirdRequest.Description);
-            
+
             // Send the request
             teacher.ProcessRequest(thirdRequest);
-            Console.ReadLine();
+            Console.ReadKey();
         }
     }
 }
