@@ -8,128 +8,116 @@
 
 using System;
 
-namespace Mediator
+// The 'Mediator' abstract class
+// Defines an interface for communicating with Colleague objects
+abstract class Mediator
 {
-    /// <summary>
-    /// MainApp startup class for Structural Mediator Design Pattern
-    /// </summary>
-    class MainApp
+    public abstract void Send(string message, Colleague colleague);
+}
+
+// The 'ConcreteMediator' class
+// Knows the Colleague class and keeps a reference to the Colleague objects
+// Implements cooperative behavior by coordinating communication between the Colleague objects
+class ConcreteMediator : Mediator
+{
+    private ConcreteColleague1 colleague1;
+    private ConcreteColleague2 colleague2;
+
+    public ConcreteColleague1 Colleague1
     {
-        /// <summary>
-        /// Entry point into console application
-        /// </summary>
-        static void Main()
-        {
-            ConcreteMediator m = new ConcreteMediator();
-
-            ConcreteColleague1 c1 = new ConcreteColleague1(m);
-            ConcreteColleague2 c2 = new ConcreteColleague2(m);
-
-            m.Colleague1 = c1;
-            m.Colleague2 = c2;
-
-            c1.Send("How are you?");
-            c2.Send("Fine, thanks");
-
-            // Wait for user
-            Console.ReadKey();
-        }
+        set { colleague1 = value; }
     }
 
-    /// <summary>
-    /// The 'Mediator' abstract class
-    /// Defines an interface for communicating with Colleague objects
-    /// </summary>
-    abstract class Mediator
+    public ConcreteColleague2 Colleague2
     {
-        public abstract void Send(string message, Colleague colleague);
+        set { colleague2 = value; }
     }
 
-    /// <summary>
-    /// The 'ConcreteMediator' class
-    /// Knows the Colleague class and keeps a reference to the Colleague objects
-    /// Implements cooperative behavior by coordinating communication between the Colleague objects
-    /// </summary>
-    class ConcreteMediator : Mediator
+    public override void Send(string message, Colleague colleague)
     {
-        private ConcreteColleague1 _colleague1;
-        private ConcreteColleague2 _colleague2;
-
-        public ConcreteColleague1 Colleague1
+        if (colleague1 == colleague)
         {
-            set { _colleague1 = value; }
+            colleague2.Notify(message);
         }
-
-        public ConcreteColleague2 Colleague2
+        else
         {
-            set { _colleague2 = value; }
-        }
-
-        public override void Send(string message, Colleague colleague)
-        {
-            if (_colleague1 == colleague)
-            {
-                _colleague2.Notify(message);
-            }
-            else
-            {
-                _colleague1.Notify(message);
-            }
+            colleague1.Notify(message);
         }
     }
+}
 
-    /// <summary>
-    /// The 'Colleague' abstract class
-    /// Each Colleague class knows its Mediator object
-    /// Each colleague communicates with its mediator whenever 
-    /// it would have otherwise communicated with another colleague
-    /// </summary>
-    abstract class Colleague
+// The 'Colleague' abstract class
+// Each Colleague class knows its Mediator object
+// Each colleague communicates with its mediator whenever 
+// it would have otherwise communicated with another colleague
+abstract class Colleague
+{
+    protected Mediator mediator;
+
+    // Constructor
+    public Colleague(Mediator mediator)
     {
-        protected Mediator mediator;
+        this.mediator = mediator;
+    }
+}
 
-        // Constructor
-        public Colleague(Mediator mediator)
-        {
-            this.mediator = mediator;
-        }
+// A 'ConcreteColleague' class
+class ConcreteColleague1 : Colleague
+{
+    // Constructor
+    public ConcreteColleague1(Mediator mediator) : base(mediator) { }
+
+    public void Send(string message)
+    {
+        mediator.Send(message, this);
     }
 
-    /// <summary>
-    /// A 'ConcreteColleague' class
-    /// </summary>
-    class ConcreteColleague1 : Colleague
+    public void Notify(string message)
     {
-        // Constructor
-        public ConcreteColleague1(Mediator mediator) : base(mediator) { }
+        Console.WriteLine("Colleague1 gets message: " + message);
+    }
+}
 
-        public void Send(string message)
-        {
-            mediator.Send(message, this);
-        }
 
-        public void Notify(string message)
-        {
-            Console.WriteLine("Colleague1 gets message: " + message);
-        }
+// A 'ConcreteColleague' class
+class ConcreteColleague2 : Colleague
+{
+    // Constructor
+    public ConcreteColleague2(Mediator mediator) : base(mediator) { }
+
+    public void Send(string message)
+    {
+        mediator.Send(message, this);
     }
 
-    /// <summary>
-    /// A 'ConcreteColleague' class
-    /// </summary>
-    class ConcreteColleague2 : Colleague
+    public void Notify(string message)
     {
-        // Constructor
-        public ConcreteColleague2(Mediator mediator) : base(mediator) { }
+        Console.WriteLine("Colleague2 gets message: " + message);
+    }
+}
 
-        public void Send(string message)
-        {
-            mediator.Send(message, this);
-        }
+// MainApp startup class for Structural Mediator Design Pattern
+class MainApp
+{
+    private static ConcreteMediator mediator;
+    private static ConcreteColleague1 c1;
+    private static ConcreteColleague2 c2;
 
-        public void Notify(string message)
-        {
-            Console.WriteLine("Colleague2 gets message: " + message);
-        }
+    // Entry point into console application
+    static void Main()
+    {
+        mediator = new ConcreteMediator();
+
+        c1 = new ConcreteColleague1(mediator);
+        c2 = new ConcreteColleague2(mediator);
+
+        mediator.Colleague1 = c1;
+        mediator.Colleague2 = c2;
+
+        c1.Send("How are you?");
+        c2.Send("Fine, thanks");
+
+        // Wait for user
+        Console.ReadKey();
     }
 }
