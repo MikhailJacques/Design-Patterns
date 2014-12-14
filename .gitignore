@@ -51,6 +51,7 @@
 *.cache
 *..manifest
 *.vshost.exe.manifest
+*.unsuccessfulbuild
 *TemporaryGeneratedFile_*
 AssemblyInfo.cs
 
