@@ -1,5 +1,7 @@
 // Mediator Design Pattern - Behavioral Category
 
+// UNFINISHED VERSION - DOES NOT COMPILE YET !!!
+
 #include <map>
 #include <list>
 #include <vector>
