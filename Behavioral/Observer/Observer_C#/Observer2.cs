@@ -4,7 +4,7 @@
 // It is suitable for any scenario that requires push-based notification. 
 // The pattern defines a Provider (also known as a Subject or an Observable) and zero, one, or more Subscribers 
 // (also known as Observers). Subscribers register with the Provider, and whenever a predefined condition, event, 
-// or state change occurs, the Provider automatically notifies all Subsribers by calling one of their methods. 
+// or state change occurs, the Provider automatically notifies all Subscribers by calling one of their methods. 
 // In this method call, the Provider (Subject) can also provide current state information to Subscribers (Observers). 
 // In the .NET Framework, the Observer design pattern is applied by implementing the generic System.IObservable<T> and 
 // System.IObserver<T> interfaces. The generic type parameter represents the type that provides notification information.
@@ -91,8 +91,7 @@ public class BaggageInfo
 // The Provider must implement a single method, IObservable<T>.Subscribe, 
 // which is called by Subscribers that wish to receive notifications from the Provider.
 
-// A BaggageHandler class is responsible for receiving information 
-// about arriving flights and baggage claim carousels. 
+// A BaggageHandler class is responsible for receiving information about arriving flights and baggage claim carousels. 
 // Internally, it maintains two collections:
 // - flights - A collection of flights and their assigned carousels.
 // - observers - A collection of clients that will receive updated information.
@@ -207,7 +206,7 @@ public class BaggageHandler : IObservable<BaggageInfo>
 
 // The Provider's Subscribe method returns an IDisposable implementation that enables Observers 
 // to stop receiving notifications before the OnCompleted method is called. The source code for 
-// this Unsubscriber(Of BaggageInfo) class is shown in the following example. When the class is 
+// this Unsubscriber (of BaggageInfo) class is shown in the following example. When the class is 
 // instantiated in the BaggageHandler.Subscribe method, it is passed a reference to the Observers 
 // collection and a reference to the Observer that is added to the collection. These references 
 // are assigned to local variables. When the Object's Dispose method is called, it checks whether 

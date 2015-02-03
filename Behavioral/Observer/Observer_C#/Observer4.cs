@@ -5,7 +5,7 @@
 
 // Participants
 //
-// Subject  (Stock)
+// Subject (Stock)
 // - Knows its Observers. Any number of Observer objects may observe a Subject
 // - Provides an interface for attaching and detaching Observer objects.
 //
@@ -75,9 +75,9 @@ abstract class Stock
     public void Notify()
     {
         foreach (IInvestor investor in _investors)
-        {
             investor.Update(this);
-        }
+
+        // _investors.ForEach(x => x.Update(this));
 
         Console.WriteLine("");
     }
@@ -108,9 +108,7 @@ class IBM : Stock
 {
     // Constructor
     public IBM(string symbol, double price)
-        : base(symbol, price)
-    {
-    }
+        : base(symbol, price) { }
 }
 
 // The 'Observer' interface
@@ -133,8 +131,7 @@ class Investor : IInvestor
 
     public void Update(Stock stock)
     {
-        Console.WriteLine("Notified {0} of {1}'s " +
-            "change to {2:C}", _name, stock.Symbol, stock.Price);
+        Console.WriteLine("Notified {0} of {1}'s " + "change to {2:C}", _name, stock.Symbol, stock.Price);
     }
 
     // Gets or sets the stock

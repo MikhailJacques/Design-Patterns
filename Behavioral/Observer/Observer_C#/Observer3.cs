@@ -5,18 +5,18 @@
 
 // Participants
 //
-// Subject  (Stock)
+// Subject
 // - Knows its Observers. Any number of Observer objects may observe a Subject
 // - Provides an interface for attaching and detaching Observer objects.
 //
-// ConcreteSubject (IBM)
+// ConcreteSubject
 // - Stores state of interest to ConcreteObserver
 // - Sends a notification to its Observers when its state changes
 //
-// Observer (IInvestor)
+// Observer
 // - Defines an updating interface for objects that should be notified of changes in a Subject.
 //
-// ConcreteObserver (Investor)
+// ConcreteObserver
 // - Maintains a reference to a ConcreteSubject object
 // - Stores state that should stay consistent with the Subject's
 // - Implements the Observer updating interface to keep its state consistent with the Subject's
@@ -57,24 +57,24 @@ class MainApp
 // The 'Subject' abstract class
 abstract class Subject
 {
-    private List<Observer> _observers = new List<Observer>();
+    private List<Observer> observers = new List<Observer>();
 
     public void Attach(Observer observer)
     {
-        _observers.Add(observer);
+        observers.Add(observer);
     }
 
     public void Detach(Observer observer)
     {
-        _observers.Remove(observer);
+        observers.Remove(observer);
     }
 
     public void Notify()
     {
-        foreach (Observer ob in _observers)
-        {
+        // observers.ForEach(x => x.Update());
+
+        foreach (Observer ob in observers)
             ob.Update();
-        }
     }
 }
 

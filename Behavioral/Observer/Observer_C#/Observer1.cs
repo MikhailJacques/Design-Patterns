@@ -32,11 +32,11 @@ interface ISubject
 
 // The Subject maintains a list of Observers. 
 // The Subscribe and Unsubscribe methods are the ones through which the Observers 
-// register and unregister themselves to the Subject. The Notify method is the one 
+// register and unregister themselves to/from the Subject. The Notify method is the one 
 // which has the responsibility of notifying all the Observers.
 public class Subject : ISubject
 {
-    private int _int;
+    private int num_items;
 
     private List<IObserver> observers = new List<IObserver>();
 
@@ -44,16 +44,16 @@ public class Subject : ISubject
     {
         get
         {
-            return _int;
+            return num_items;
         }
 
         set
         {
             // Notify Observers only when there is an increase in inventory
-            if (value > _int)
+            if (value > num_items)
                 Notify();
 
-            _int = value;
+            num_items = value;
         }
     }
 
@@ -128,7 +128,7 @@ class MainApp
 
         Console.WriteLine();
 
-        // Increse the inventory count
+        // Increase the inventory count
         subject.Inventory++;
 
         // Wait for user input
