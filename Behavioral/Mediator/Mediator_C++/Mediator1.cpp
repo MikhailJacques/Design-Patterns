@@ -60,7 +60,7 @@ class ColleagueInterface
 };
 
 // Colleague classes (Participant)
-// - Each Colleague object registers with a Mediator object and comminicates only with it 
+// - Each Colleague object registers with a Mediator object and communicates only with it 
 //   whenever it would have otherwise communicated with another Colleague object directly.
 class Colleague : public ColleagueInterface 
 {
