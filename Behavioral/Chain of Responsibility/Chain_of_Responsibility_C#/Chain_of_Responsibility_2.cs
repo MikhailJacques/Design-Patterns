@@ -1,4 +1,4 @@
-﻿// Chain of Responsibility Design Pattern - Behavioral Category
+﻿// Chain of Responsibility Design Pattern - Behavioural Category
 
 // Definition:
 //
@@ -128,7 +128,7 @@ class President : Approver
 }
 
 
-// MainApp startup class for Real-World Chain of Responsibility Design Pattern.
+// MainApp start-up class for Real-World Chain of Responsibility Design Pattern.
 class MainApp
 {
     // Entry point into console application.

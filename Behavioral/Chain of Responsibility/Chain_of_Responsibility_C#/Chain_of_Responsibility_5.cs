@@ -47,10 +47,10 @@ public abstract class Handler
 {
     protected Handler m_successor;
 
-	public void setSuccessor(Handler successor)
-	{
-		m_successor = successor;
-	}
+    public void setSuccessor(Handler successor)
+    {
+        m_successor = successor;
+    }
 
     public void handleRequest(Request request)
     {
@@ -71,15 +71,15 @@ public class ConcreteHandlerOne : Handler
     protected override bool handleRequestImpl(Request request)
     {
         if (request.getValue() < 0)
-        {	    
+        {
             // If request is eligible handle it
-	        Console.WriteLine("Negative values are handled by ConcreteHandlerOne: ");
-            Console.WriteLine("\tConcreteHandlerOne.HandleRequest : " + request.getDescription() + request.getValue());
-	        return true;
+            Console.WriteLine("Negative values are handled by {0}: ", this.GetType().Name);
+            Console.WriteLine("\t{0} {1}: {2} ", this.GetType().Name, request.getDescription(), request.getValue());
+            return true;
         }
         else
         {
-	        return false;
+            return false;
         }
     }
 }
@@ -92,8 +92,8 @@ public class ConcreteHandlerThree : Handler
         if (request.getValue() == 0)
         {
             // If request is eligible handle it
-            Console.WriteLine("Zero values are handled by ConcreteHandlerThree: ");
-            Console.WriteLine("\tConcreteHandlerThree.HandleRequest : " + request.getDescription() + request.getValue());
+            Console.WriteLine("Zero values are handled by {0}: ", this.GetType().Name);
+            Console.WriteLine("\t{0} {1}: {2} ", this.GetType().Name, request.getDescription(), request.getValue());
             return true;
         }
         else
@@ -110,8 +110,8 @@ public class ConcreteHandlerTwo : Handler
         if (request.getValue() > 0)
         {
             // If request is eligible handle it
-            Console.WriteLine("Positive values are handled by ConcreteHandlerTwo: ");
-            Console.WriteLine("\tConcreteHandlerTwo.HandleRequest : " + request.getDescription() + request.getValue());
+            Console.WriteLine("Positive values are handled by {0}: ", this.GetType().Name);
+            Console.WriteLine("\t{0} {1}: {2} ", this.GetType().Name, request.getDescription(), request.getValue());
             return true;
         }
         else
@@ -135,11 +135,11 @@ public class MainApp
         h2.setSuccessor(h3);
 
         // Send requests to the chain
-        h1.handleRequest(new Request("Negative Value ", -1));
-        h1.handleRequest(new Request("Zero Value ", 0));
-        h1.handleRequest(new Request("Positive Value ", 1));
-        h1.handleRequest(new Request("Positive Value ", 2));
-        h1.handleRequest(new Request("Negative Value ", -5));
+        h1.handleRequest(new Request("Negative Value", -1));
+        h1.handleRequest(new Request("Zero Value", 0));
+        h1.handleRequest(new Request("Positive Value", 1));
+        h1.handleRequest(new Request("Positive Value", 2));
+        h1.handleRequest(new Request("Negative Value", -5));
 
         Console.ReadKey();
     }

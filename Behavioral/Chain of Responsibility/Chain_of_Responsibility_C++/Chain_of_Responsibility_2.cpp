@@ -72,27 +72,35 @@ int main ()
 {
     // Create three special handlers with IDs "1, 2 and 3"
     // Since a SpecialHandler is a type of "Handler" they are legal statements.
-    Handler *h1 = new SpecialHandler(1, 10);
-    Handler *h2 = new SpecialHandler(2, 20);
-    Handler *h3 = new SpecialHandler(3, 30);
+    Handler * h1 = new SpecialHandler(1, 10);
+    Handler * h2 = new SpecialHandler(2, 20);
+    Handler * h3 = new SpecialHandler(3, 30);
+
+	SpecialHandler h4(4, 40);
  
     // Chain up the handlers together
     h1->setNextHandler(h2);
     h2->setNextHandler(h3);
+	h3->setNextHandler(&h4);
  
-	// Handler 1 handled this request
+	// Handler 1 handles this request.
 	h1->request(5);
 
-    // Handler 1 couldn't handle the request so it passed it on to Handler 2 which could handle since it is less than 20
+    // Handler 1 cannot handle the request so it passes it on to Handler 2 which can handle it since the limit is less than 20.
     h1->request(14);
  
-	// Handler 1 couldn't handle the request so it passed it on to Handler 2, which also could not handle it so it passed 
-	// the request on to Handler 3, which could handle since it is less than 30
+	// Handler 1 cannot handle the request so it passes it on to Handler 2, which also cannot handle it so it passes 
+	// the request on to Handler 3, which can handle it since the limit is less than 30.
 	h1->request(25);
+	
+	// Handler 1 cannot handle the request so it passes it on to Handler 2, which also cannot handle it so it passes 
+	// the request on to Handler 3, which also cannot handle it so it passes the request on to Handler 4, 
+	// which can handle it since the limit is less than 40.
+    h1->request(37);
 
     // No handler can handle this request, so it triggers the last handler's else statement showing that it is the last 
-	// and still couldn't handle the request.
-    h1->request(32);
+	// and still cannot handle the request.
+    h1->request(42);
 
     // Free memory
     delete h1;

@@ -165,6 +165,7 @@ namespace Client
 
             // Send the request
             teacher.ProcessRequest(thirdRequest);
+
             Console.ReadKey();
         }
     }

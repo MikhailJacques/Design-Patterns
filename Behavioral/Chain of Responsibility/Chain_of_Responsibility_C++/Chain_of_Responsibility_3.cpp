@@ -29,7 +29,7 @@ class AskMom : public GimmeStrategy
 
 		Answer canIHave() 
 		{
-			cout << "Mooom? Can I have this?" << endl;
+			cout << "Mom? Can I have this?" << endl;
 			cout << "Nope.\n" << endl;
 			return NO;
 		}

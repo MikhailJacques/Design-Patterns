@@ -43,7 +43,7 @@ class Base
 };
 
 
-class Handler1: public Base
+class Handler1 : public Base
 {
 	public:
 
@@ -64,7 +64,7 @@ class Handler1: public Base
 		}
 };
 
-class Handler2: public Base
+class Handler2 : public Base
 {
 	public:
 
@@ -85,7 +85,7 @@ class Handler2: public Base
 		}
 };
 
-class Handler3: public Base
+class Handler3 : public Base
 {
 	public:
 	  

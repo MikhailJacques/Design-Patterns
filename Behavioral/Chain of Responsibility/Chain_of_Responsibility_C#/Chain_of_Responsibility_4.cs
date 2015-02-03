@@ -1,4 +1,4 @@
-﻿// Chain of Responsibility Design Pattern - Behavioral Category
+﻿// Chain of Responsibility Design Pattern - Behavioural Category
 
 // Motivation
 //
@@ -43,7 +43,7 @@
 
 // Hot points
 // 
-// The fundamental flaw of the pattern is the fact that it gets easily broken: if the programmer forgets to call the next handler 
+// The fundamental flaw of the pattern is the fact that it gets easily broken: if a programmer forgets to call the next handler 
 // in the concreteHandler the request gets lost on the way. This problem comes from the fact that the execution is not handled 
 // entirely by the superclass and the call is triggered in the superclass.
 // When implementing the CoR pattern a special care should be taken for the request representation. 
@@ -105,9 +105,9 @@ public class ConcreteHandlerOne : Handler
     {
         if (request.getValue() < 0)
         {
-            // If request is eligible handle it
-            Console.WriteLine("Negative values are handled by ConcreteHandlerOne: ");
-            Console.WriteLine("\tConcreteHandlerOne.HandleRequest : " + request.getDescription() + request.getValue());
+            // If request is eligible, handle it.
+            Console.WriteLine("Negative values are handled by {0}: ", this.GetType().Name);
+            Console.WriteLine("\t{0} {1}: {2} ", this.GetType().Name, request.getDescription(), request.getValue());
         }
         else
         {
@@ -124,8 +124,8 @@ public class ConcreteHandlerThree : Handler
         if (request.getValue() == 0)
         {
             // If request is eligible handle it
-            Console.WriteLine("Zero values are handled by ConcreteHandlerThree: ");
-            Console.WriteLine("\tConcreteHandlerThree.HandleRequest : " + request.getDescription() + request.getValue());
+            Console.WriteLine("Zero values are handled by {0}: ", this.GetType().Name);
+            Console.WriteLine("\t{0} {1}: {2} ", this.GetType().Name, request.getDescription(), request.getValue());
         }
         else
         {
@@ -141,8 +141,8 @@ public class ConcreteHandlerTwo : Handler
         if (request.getValue() > 0)
         {
             // If request is eligible handle it
-            Console.WriteLine("Positive values are handled by ConcreteHandlerTwo: ");
-            Console.WriteLine("\tConcreteHandlerTwo.HandleRequest : " + request.getDescription() + request.getValue());
+            Console.WriteLine("Positive values are handled by {0}: ", this.GetType().Name);
+            Console.WriteLine("\t{0} {1}: {2} ", this.GetType().Name, request.getDescription(), request.getValue());
         }
         else
         {
@@ -164,11 +164,11 @@ public class MainApp
         h2.setSuccessor(h3);
 
         // Send requests to the chain
-        h1.handleRequest(new Request("Negative Value ", -1));
-        h1.handleRequest(new Request("Zero Value ", 0));
-        h1.handleRequest(new Request("Positive Value ", 1));
-        h1.handleRequest(new Request("Positive Value ", 2));
-        h1.handleRequest(new Request("Negative Value ", -5));
+        h1.handleRequest(new Request("Negative Value", -1));
+        h1.handleRequest(new Request("Zero Value", 0));
+        h1.handleRequest(new Request("Positive Value", 1));
+        h1.handleRequest(new Request("Positive Value", 2));
+        h1.handleRequest(new Request("Negative Value", -5));
 
         Console.ReadKey();
     }
