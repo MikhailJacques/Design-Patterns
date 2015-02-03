@@ -78,7 +78,6 @@ class ConcreteColleague1 : Colleague
     }
 }
 
-
 // A 'ConcreteColleague' class
 class ConcreteColleague2 : Colleague
 {
@@ -96,7 +95,7 @@ class ConcreteColleague2 : Colleague
     }
 }
 
-// MainApp startup class for Structural Mediator Design Pattern
+// MainApp start-up class for Structural Mediator Design Pattern
 class MainApp
 {
     private static ConcreteMediator mediator;

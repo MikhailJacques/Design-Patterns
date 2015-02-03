@@ -32,6 +32,7 @@ using System;
 using System.Collections.Generic;
 
 // The 'Mediator' abstract class
+// Defines an interface for communicating with Colleague objects.
 abstract class AbstractChatroom
 {
     public abstract void Register(Participant participant);
@@ -39,6 +40,8 @@ abstract class AbstractChatroom
 }
 
 // The 'ConcreteMediator' class
+// Knows the Colleague class and keeps a reference to the Colleague objects.
+// Implements cooperative behavior by coordinating communication between the Colleague objects.
 class Chatroom : AbstractChatroom
 {
     private Dictionary<string, Participant> participants = new Dictionary<string, Participant>();
@@ -67,7 +70,7 @@ class Participant
 {
     private string name;
     private Chatroom chatroom;
-    
+
     // Constructor
     public Participant(string name)
     {
