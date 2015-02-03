@@ -8,7 +8,7 @@
 // of a class inevitably leaves something out. Later, when users need additional functionality, if an iterator 
 // was originally provided, they could add this functionality with "open for extension, closed for modification". 
 // Without an iterator, their only recourse is to invasively customize production code. 
-// Below, the orginal Stack class did not include an equality operator, but it did include an iterator. 
+// Below, the original Stack class did not include an equality operator, but it did include an iterator. 
 // As a result, the equality operator could be readily retrofitted.
 
 // http://sourcemaking.com/design_patterns/Iterator/cpp/1
@@ -42,11 +42,11 @@ class Stack
 
 		bool isEmpty()
 		{
-			return (sp ==  - 1);
+			return (sp == - 1);
 		}
 
 		// 2. Add a createIterator() member
-		StackIter *createIterator() const; 
+		StackIter * createIterator() const; 
 };
 
 
@@ -54,11 +54,11 @@ class StackIter
 {
 		// 1. Design an "iterator" class
 		int index;
-		const Stack *stk;
+		const Stack * stk;
 		
 	public:
 
-		StackIter(const Stack *s)
+		StackIter(const Stack * s)
 		{
 			stk = s;
 		}

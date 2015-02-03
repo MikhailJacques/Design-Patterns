@@ -7,7 +7,7 @@
 // Having a collection of objects is a very common thing in software development. 
 // If we have a collection of objects then we might also find ourselves in need to traverse this collection. 
 // Most languages provide traversal techniques over basic collection types. 
-// C# also contains some special container types capable of holding a collection of values (example: Lists, and ArrayLists in C#). 
+// C# also contains some special container types capable of holding a collection of values (example: Lists and ArrayLists in C#). 
 // These specialized containers also come with the possibility of getting iterated. 
 // C# container classes are the best examples of how the iterator pattern is implemented.
 
@@ -21,7 +21,7 @@
 
 // Using the code:
 // IIterator:   This is an interface that defines the methods for accessing and traversing elements.
-// MyIterator:  This is ConcreteIterator, this implements the Iterator interface and keeps track 
+// MyIterator:  This is ConcreteIterator that implements the Iterator interface and keeps track 
 //              of the current position in the traversal of the aggregate object.
 // IAggregate:  This is an interface that defines methods for creating an Iterator object.
 // MyAggregate: This is the ConcreteAggregate object, i.e., the real collection lies inside this.
@@ -169,26 +169,26 @@ class Program
 {
     static void Main(string[] args)
     {
-        MyAggregate aggr = new MyAggregate();
+        MyAggregate aggregate = new MyAggregate();
 
-        aggr[0] = "1";
-        aggr[1] = "2";
-        aggr[2] = "3";
-        aggr[3] = "4";
-        aggr[4] = "5";
-        aggr[5] = "6";
-        aggr[6] = "7";
-        aggr[7] = "8";
-        aggr[8] = "9";
-        aggr[9] = "Bob";
+        aggregate[0] = "1";
+        aggregate[1] = "2";
+        aggregate[2] = "3";
+        aggregate[3] = "4";
+        aggregate[4] = "5";
+        aggregate[5] = "6";
+        aggregate[6] = "7";
+        aggregate[7] = "8";
+        aggregate[8] = "9";
+        aggregate[9] = "Bob";
 
-        IIterator iter = aggr.GetIterator();
+        IIterator iter = aggregate.GetIterator();
 
         for (string s = iter.FirstItem; iter.IsDone == false; s = iter.NextItem)
         {
             Console.WriteLine(s);
         }
 
-        Console.Read();
+        Console.ReadKey();
     }
 }

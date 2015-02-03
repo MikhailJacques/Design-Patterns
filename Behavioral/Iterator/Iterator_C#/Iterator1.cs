@@ -14,8 +14,8 @@ abstract class Iterator
 {
     public abstract object First();
     public abstract object Next();
+    public abstract object Current();
     public abstract bool IsDone();
-    public abstract object CurrentItem();
 }
 
 
@@ -47,7 +47,7 @@ class ConcreteIterator : Iterator
         return ret;
     }
 
-    public override object CurrentItem()
+    public override object Current()
     {
         return aggregate[current];
     }
@@ -95,16 +95,16 @@ class MainApp
 {
     static void Main()
     {
-        ConcreteAggregate aggr = new ConcreteAggregate();
+        ConcreteAggregate aggregate = new ConcreteAggregate();
 
-        aggr[0] = "Item A";
-        aggr[1] = "Item B";
-        aggr[2] = "Item C";
-        aggr[3] = "Item D";
-        aggr[4] = "Bob";
+        aggregate[0] = "Item A";
+        aggregate[1] = "Item B";
+        aggregate[2] = "Item C";
+        aggregate[3] = "Item D";
+        aggregate[4] = "Bob";
 
         // Create Iterator and provide aggregate 
-        ConcreteIterator it = new ConcreteIterator(aggr);
+        ConcreteIterator it = new ConcreteIterator(aggregate);
 
         Console.WriteLine("Iterating over collection:");
 
@@ -116,6 +116,6 @@ class MainApp
         }
 
         // Wait for user 
-        Console.Read();
+        Console.ReadKey();
     }
 }
