@@ -1,6 +1,6 @@
 // Memento Design Pattern - Behavioral Category
 
-// Memento pattern is one the GOF design pattern that comes as a rescue to store the state of an object. 
+// Memento pattern is one the GoF design patterns that comes as a rescue to store the state of an object. 
 // In Memento pattern, we do not create a copy of an object. We create Mementos that hold the state of 
 // an object and it might include full object or elements of an object that needs to be stored.
 
@@ -9,9 +9,9 @@
 
 // Common usage: Undo and restore operations in most software.
 
-// Ingredients of a Memento Pattern
-
-// Originator: The one whose state needs to be saved and the one that creates the Memento object.
+// Ingredients of a Memento Pattern:
+//
+// Originator: The one whose state needs to be saved and the one that creates a Memento object.
 // Memento: It holds the internal state of an Originator.
 // Caretaker: It is responsible for keeping the Memento.
 
@@ -23,7 +23,7 @@
 // and the Command itself is saved in the Command's static Command history list. 
 // Undo() simply "pops" the memento history list and reinstates Number's state from the Memento. 
 // Redo() "pops" the command history list. 
-// Note that Number's encapsulation is preserved, and Memento is wide open to Number.
+// Note that Number's encapsulation is preserved and Memento is wide open to Number.
 
 #include <string>
 #include <vector>
@@ -44,7 +44,7 @@ string toString (const T& t)
  
 class Memento;
  
-// Originator: One whose state needs to be saved and the one that creates the Memento object.
+// Originator: One whose state needs to be saved and the one that creates a Memento object.
 class Number 
 {
 	private:
@@ -87,15 +87,15 @@ class Memento {
 		Number snapshot() const { return number; }  
 };
  
-// Creates a new Memento object and returns a pointer to it
+// Creates a new Memento object and returns a pointer to it.
 // Passes to the Memento's constructor a reference to itself so that the newly 
-// created Memento saves the state of the Number object that invoked this method
+// created Memento saves the state of the Number object that invoked this method.
 Memento * Number::createMemento() const 
 {
 	return new Memento(*this);
 }
  
-// Reinstates the state saved in the Memento object passed as an argument
+// Reinstates the state saved in the Memento object passed as an argument.
 void Number::reinstateMemento(Memento * mem) 
 {
 	*this = mem->snapshot();
@@ -107,7 +107,7 @@ class Command
 	private:
 
 		// Define a new type, which is a pointer to a function 
-		// declared in the Number class that takes no arguments 
+		// declared in the Number class that takes no arguments.
 		typedef void (Number::*Action)();
 
 		Action action;
@@ -128,18 +128,18 @@ class Command
 		// and the Command itself is saved in the Command's static Command history list. 
 		virtual void execute() 
 		{
-			// Ensure there is sufficient room in the list for adding a new element
+			// Ensure there is sufficient room in the list for adding a new element.
 			if (mementoHistory.size() < numCommands + 1)
 				mementoHistory.resize(numCommands + 1);
 			
-			// Save the Number's last value in the Command's static Memento history list
+			// Save the Number's last value in the Command's static Memento history list.
 			mementoHistory[numCommands] = number->createMemento();  
 			
-			// Ensure there is sufficient room in the list for adding a new element
+			// Ensure there is sufficient room in the list for adding a new element.
 			if (commandHistory.size() < numCommands + 1)
 				commandHistory.resize(numCommands + 1);
 			
-			// Save the last command in the Command's static Command history list
+			// Save the last command in the Command's static Command history list.
 			commandHistory[numCommands] = this; 
 			
 			if (numCommands > maxCommands)
@@ -151,7 +151,7 @@ class Command
 			(number->*action)();
 		}
 
-		// Pop the Memento history list and reinstate the Number's state from the Memento
+		// Pop the Memento history list and reinstate the Number's state from the Memento.
 		static void undo() 
 		{
 			if (numCommands == 0)

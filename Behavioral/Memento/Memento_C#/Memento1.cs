@@ -22,9 +22,9 @@
 //   permitted to access the Memento's internal state.
 // Originator (SalesProspect)
 // - Creates a Memento containing a snapshot of its current internal state.
-// - Uses the Memento to restore its internal state
+// - Uses the Memento to restore its internal state.
 // Caretaker (Caretaker)
-// - Is responsible for the Memento's safekeeping
+// - Is responsible for the Memento's safekeeping.
 // - Never operates on or examines the contents of a Memento.
 
 // http://www.dofactory.com/net/memento-design-pattern
@@ -32,7 +32,6 @@
 using System;
 
 // MainApp startup class for Structural 
-// 
 class MainApp
 {
     // Entry point into console application.
